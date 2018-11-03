@@ -19,24 +19,29 @@ class App extends Component {
 
         this.state = {
 			starships: [],
+			starshipsCount: 0,
 			starshipsDetails: [],
 			pilotsName: [],
 			pilotsDetails: [],
-			modalOpen: ''
+			modalOpen: '',
+			inputValue: ''
 		}
 
 		this.changePage = this.changePage.bind(this);
 		this.getDetails = this.getDetails.bind(this);
 		this.openModal = this.openModal.bind(this);
+		this.closeModal = this.closeModal.bind(this);
+		this.handleChange = this.handleChange.bind(this);
 	}
 
 	componentDidMount() {
-		axios.get('https://swapi.co/api/starships?page=1')
+		axios.get('https://swapi.co/api/starships')
 		.then(response => {
 			this.setState({ 
-				starships: response.data.results
+				starships: response.data.results,
+				starshipsCount: response.data.count
 			});
-			console.log(this.state.starships);
+			console.log(this.state.starshipsCount);
 		})
 	}
 
@@ -61,6 +66,7 @@ class App extends Component {
 		.then(response => {
 			this.setState({ 
 				starshipsDetails: response.data,
+				pilotsName: []
 			});
 			console.log(this.state.starshipsDetails);
 
@@ -78,20 +84,34 @@ class App extends Component {
 	}
 
 	openModal(event) {
-		let url = event.target.dataset.url;
+		let name = event.target.dataset.name;
 
 		this.setState({
 			modalOpen: 'modal--active'
 		});
 
-		axios.get(url)
-		.then(response => {
-			this.setState({
-				pilotsDetails: response.data
-			});
-			console.log(this.state.pilotsDetails);
-		})
+		for(let i = 0; i < this.state.pilotsName.length; i++) {
+			if(this.state.pilotsName[i].name === name) {
+				this.setState({
+					pilotsDetails: this.state.pilotsName[i]
+				}, () => {
+					console.log(this.state.pilotsDetails); // call-back function to sync the state
+				});
+			}
+		}
 	}
+
+	closeModal() {
+		this.setState({
+			modalOpen: ''
+		});
+	}
+
+	handleChange(event) {
+        this.setState({
+			input: event.target.value
+		});
+    }
 
 	render() {
 		return (
@@ -102,11 +122,12 @@ class App extends Component {
 				<BrowserRouter>
 					<div className="content">
 						<Switch>
-							<Route exact path="/" render={() => <Home starships={this.state.starships} changePage={this.changePage} getDetails={this.getDetails} />} />
+							<Route exact path="/" render={() => <Home starships={this.state.starships} starshipsCount={this.state.starshipsCount} changePage={this.changePage} getDetails={this.getDetails} inputValue={this.state.inputValue} handleChange={this.handleChange} />} />
 							<Route path="/details" render={() => <Details details={this.state.starshipsDetails} pilots={this.state.pilotsName} openModal={this.openModal} />} />
 						</Switch>
 
-						<Modal modalOpen={this.state.modalOpen} pilotsDetails={this.state.pilotsDetails} />
+						<Modal modalOpen={this.state.modalOpen} closeModal={this.closeModal} pilotsDetails={this.state.pilotsDetails} />
+
 						
 					</div>
 				</BrowserRouter>

@@ -1,23 +1,28 @@
 import React, { Component } from 'react';
 
 import List from '../components/list';
-import Modal from '../components/modal';
+import Pagination from '../components/pagination';
 
 class Home extends Component {
     render() {
         return (
             <div>
-                <h2>List of Starships</h2>
-                <List items={this.props.starships} getDetails={this.props.getDetails} />
+                <div class="top-row">
+                    <h2>List of Starships</h2>
+                    <input class="searchbar" type="text" value={this.props.inputValue} placeholder="Search for starships..." />
+                </div>
 
-                <ul className="pagination">
-                    <li id="1" onClick={this.props.changePage}>1</li>
-                    <li id="2" onClick={this.props.changePage}>2</li>
-                    <li id="3" onClick={this.props.changePage}>3</li>
-                    <li id="4" onClick={this.props.changePage}>4</li>
-                </ul>
+                <div class="main-list">
+                    <div class="main-list__head">
+                        <span className="main-list__data w-30">Name</span>
+                        <span className="main-list__data w-30">Model</span>
+                        <span className="main-list__data w-30">Class</span>
+                        <span className="main-list__data w-10">Passengers</span>
+                    </div>
+                    <List items={this.props.starships} getDetails={this.props.getDetails} />
+                </div>
 
-                <Modal />
+                <Pagination starships={this.props.starships} starshipsCount={this.props.starshipsCount} changePage={this.props.changePage}/>
             </div>
         );
     }

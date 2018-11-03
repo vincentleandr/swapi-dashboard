@@ -22,18 +22,98 @@ header {
     padding: 20px 50px;
 }
 
-.list {
+.top-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.searchbar {
+    width: 40%;
+    height: 30px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    text-indent: 20px;
+}
+
+.main-list {
     display: flex;
     flex-direction: column;
+    margin-top: 30px;
+
+    &__head {
+        padding: 0 20px;
+        display: flex;
+        font-weight: 500;
+    }
+
+    &__body {
+        display: flex;
+        flex-direction: column;
+        list-style: none;
+        padding: 0;
+    }
+
+    &__item {
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        margin-bottom: 10px;
+        padding: 15px 20px;
+        position: relative;
+        display: flex;
+        justify-content: space-between;
+        transition: all 0.3s;
+
+        &:nth-child(even) {
+            background: #f2f2f2;
+        }
+
+        &:hover {
+            background: #ddd;
+        }
+    }
+
+    &__data.w-10 {
+        width: 10%;
+    }
+
+    &__data.w-30 {
+        width: 30%;
+    }
+}
+
+.details-data {
+    display: flex;
+    flex-direction: column;
+    margin-top: 20px;
+
+    ul {
+        margin: 0;
+    }
+}
+
+.label {
+    opacity: 0.4;
+    font-size: 14px;
+    font-weight: 500;
 }
 
 .pagination {
     display: flex;
+    justify-content: center;
     list-style: none;
+    padding: 0;
 
-    li {
-        padding: 5px;
+    &__item {
+        width: 30px;
+        height: 30px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
         margin: 10px;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        cursor: pointer;
     }
 }
 
@@ -52,9 +132,32 @@ header {
         width: 600px;
         padding: 20px;
         background: #fff;
+        border-radius: 4px;
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+        position: relative;
     }
 
     &--active {
         display: flex;
     }
+
+    .btn-close {
+        position: absolute;
+        top: -15px;
+        right: -15px;
+        cursor: pointer;
+        width: 40px;
+        height: 40px;
+        border: 1px solid #ddd;
+        border-radius: 50%;
+        font-size: 30px;
+    }
+}
+
+.divlinker {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
 }

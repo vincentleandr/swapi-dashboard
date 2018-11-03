@@ -9,7 +9,7 @@ class Home extends Component {
             <div>
                 <div class="top-row">
                     <h2>List of Starships</h2>
-                    <input class="searchbar" type="text" value={this.props.inputValue} placeholder="Search for starships..." />
+                    <input class="searchbar" type="text" value={this.props.inputValue} placeholder="Search for starships..."/>
                 </div>
 
                 <div class="main-list">
